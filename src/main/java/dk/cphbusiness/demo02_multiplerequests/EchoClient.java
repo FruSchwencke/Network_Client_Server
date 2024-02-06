@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class EchoClient
 {
@@ -21,13 +22,26 @@ public class EchoClient
     {
         EchoClient client = new EchoClient();
         client.startConnection(IP, PORT);
-        client.sendMessage("Hello SimpleServer");
-        System.out.println("Response 1: " + client.response);
-        client.sendMessage("Second message");
-        System.out.println("Response 2: " + client.response);
-        client.sendMessage("bye");
-        System.out.println(client.response);
+        client.chat(client);
+//        client.sendMessage("Hello SimpleServer");
+//        System.out.println("Response 1: " + client.response);
+//        client.sendMessage("Second message");
+//        System.out.println("Response 2: " + client.response);
+//        client.sendMessage("bye");
+       // System.out.println(client.response);
         client.stopConnection();
+    }
+
+
+    public void chat (EchoClient client)
+    {
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        do {
+            input = scanner.nextLine();
+           client.sendMessage(input);
+            System.out.println("Response: " + client.response);
+        }while (!input.equalsIgnoreCase("bye"));
     }
 
     public void startConnection(String ip, int port)

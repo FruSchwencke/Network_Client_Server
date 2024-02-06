@@ -48,6 +48,7 @@ public class EchoServer
                     out.println("Good bye ... closing down");
                 } else if (inputLine != null)
                 {
+                    //echo
                     out.println(inputLine);
                 }
             } while (inputLine != null && !inputLine.equals("bye"));
