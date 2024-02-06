@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Clock;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /*
  * Purpose of this demo is to show the most basic use of sockets with inspiration
@@ -38,7 +42,8 @@ public class SimpleServer
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String greeting = in.readLine();
             System.out.println(greeting);
-            out.println("Hello SimpleClient, Greetings from SimpleServer");
+            out.println(getGreetingWithTime());
+
         }
         catch (IOException e)
         {
@@ -48,6 +53,32 @@ public class SimpleServer
         {
             stopConnection();
         }
+    }
+
+    public String getGreetingWithTime(){
+        String greeting;
+        String timeOfDay = "";
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+        String timeformatted = String.format("%s:%s",time.getHour(),time.getMinute());
+        if (time.isAfter(LocalTime.of(4,59)) && time.isBefore(LocalTime.of(8,59))) {
+            timeOfDay = "Godmorgen, ";
+        }
+        else if(time.isAfter(LocalTime.of(9,00)) && time.isBefore(LocalTime.of(11,59))) {
+            timeOfDay = "God formiddag, ";
+        }
+        else if(time.isAfter(LocalTime.of(12,00)) && time.isBefore(LocalTime.of(16,59))) {
+            timeOfDay = "God eftermiddag, ";
+        }
+        else if (time.isAfter(LocalTime.of(17,00)) && time.isBefore(LocalTime.of(23,59))) {
+            timeOfDay = "Godaften, ";
+        }
+        else if (time.isAfter(LocalTime.of(23,59)) && time.isBefore(LocalTime.of(04,59))) {
+            timeOfDay = "Godnat, ";
+        }
+
+        greeting = String.format("%s I dag er det den %s og klokken er %s", timeOfDay, date, timeformatted);
+        return greeting;
     }
 
     public void stopConnection()
