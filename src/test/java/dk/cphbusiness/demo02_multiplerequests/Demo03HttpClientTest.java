@@ -39,13 +39,13 @@ class Demo03HttpClientTest
         client.sendMessage("GET /pages/index.html HTTP/1.1\n" +
                 "Host: localhost");
 
-        String expected = "HTTP/1.1 200 OK\n" +
-                "Date: Mon, 23 May 2022 22:38:34 GMT\n" +
-                "Server: Apache/2.4.1 (Unix)\n" +
-                "Content-Type: text/html; charset=UTF-8\n" +
-                "Content-Length: 157\n" +
-                "Connection: close\n" +
-                "\n" +
+        String expected = "HTTP/1.1 200 OK" + System.lineSeparator() +
+                "Date: Mon, 23 May 2022 22:38:34 GMT" + System.lineSeparator() +
+                "Server: Apache/2.4.1 (Unix)" + System.lineSeparator() +
+                "Content-Type: text/html; charset=UTF-8" + System.lineSeparator() +
+                "Content-Length: 157" + System.lineSeparator() +
+                "Connection: close" + System.lineSeparator() +
+                System.lineSeparator() +
                 "<html><head><title>PAUSE!!!</title></head><body><h1>Hello World</h1><p>Jeg hedder Jon</p><a href=\"https://dr.dk\">Danmarks Radios hjemmeside</a></body></html>";
         String actual = client.getResponse();
         assertEquals(expected, actual);
