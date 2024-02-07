@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 * Purpose of this demo is to show how to start the simple server and send a message to it from the client
 * Author: Thomas Hartmann
  */
-class Demo01SimpleClientServerTest {
+class Demo01HttpClientServerTest {
 
     private static final int PORT = 9090;
     private static final String IP = "127.0.0.1";
