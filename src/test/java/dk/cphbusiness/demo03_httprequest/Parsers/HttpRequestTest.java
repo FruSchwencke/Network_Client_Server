@@ -1,35 +1,37 @@
 package dk.cphbusiness.demo03_httprequest.Parsers;
 
+import dk.cphbusiness.Parsers.HttpRequest;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpRequestTest {
 
-    static String HttpRequestString;
+    static String httpRequestString;
     static HttpRequest httpRequest;
     @BeforeAll
-    void initialize ()
+    static void initialize ()
     {
-        HttpRequestString = "GET /pages/index.html HTTP/1.1\n" +
-                "Host: www.example.com\n" +
-                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3\n" +
-                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8\n" +
-                "Accept-Language: en-US,en;q=0.5\n" +
-                "Accept-Encoding: gzip, deflate, br\n" +
-                "Connection: keep-alive\n" +
+        httpRequestString = "GET /pages/index.html HTTP/1.1" + System.lineSeparator() +
+                "Host: www.example.com" + System.lineSeparator() +
+                "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3" + System.lineSeparator() +
+                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8" + System.lineSeparator() +
+                "Accept-Language: en-US,en;q=0.5" + System.lineSeparator() +
+                "Accept-Encoding: gzip, deflate, br" + System.lineSeparator() +
+                "Connection: keep-alive" + System.lineSeparator() +
                 "Upgrade-Insecure-Requests: 1";
 
-        httpRequest = new HttpRequest(HttpRequestString);
+        httpRequest = new HttpRequest(httpRequestString);
 
     }
 
     @Test
     void getHttpMethod()
     {
-        assertEquals("GET", httpRequest.getHttpRequest());
+        assertEquals("GET", httpRequest.getHttpMethod());
     }
 
     @Test
@@ -43,4 +45,20 @@ class HttpRequestTest {
     {
         assertEquals("HTTP/1.1", httpRequest.getHttpVersion());
     }
+
+    @Test
+    void getHeaderMap()
+    {
+        Map<String, String> headerMap = httpRequest.getHeaderMap();
+        assertEquals(7, headerMap.size());
+    }
+
+
+    @Test
+    void getHost()
+    {
+        assertEquals("www.example.com", httpRequest.getHost());
+    }
+
+
 }

@@ -1,6 +1,11 @@
 package dk.cphbusiness.demo03_httprequest;
 
+import com.sun.net.httpserver.HttpExchange;
+import dk.cphbusiness.Parsers.HttpRequest;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -18,6 +23,11 @@ public class HttpServer
     private Socket clientSocket;
     private PrintWriter out;
 
+    private HttpRequest httpRequest;
+
+    private BufferedReader in;
+
+
     public static void main(String[] args)
     {
         HttpServer server = new HttpServer();
@@ -32,6 +42,29 @@ public class HttpServer
         {
             clientSocket = serverSocket.accept(); // wait for client request
             out = new PrintWriter(clientSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+
+
+            // read all
+            StringBuilder httpRequestString = new StringBuilder();
+
+            String inputLine = "";
+            while (in.ready())
+            {
+                inputLine = in.readLine();
+                if (inputLine == null || inputLine.isEmpty())
+                {
+                    break;
+                }
+                httpRequestString.append(inputLine).append(System.lineSeparator());
+
+            }
+
+            HttpRequest httpRequest = new HttpRequest(httpRequestString.toString());
+
+
+
+
 
             String responseBody = "<html><head><title>PAUSE!!!</title></head>" +
                     "<body><h1>Hello World</h1>" +
